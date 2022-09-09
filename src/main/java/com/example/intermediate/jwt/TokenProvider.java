@@ -16,7 +16,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import java.security.Key;
-import java.util.Passenger;
+import java.util.Date;
 import java.util.Optional;
 
 import lombok.extern.slf4j.Slf4j;
@@ -48,9 +48,9 @@ public class TokenProvider {
   }
 
   public TokenDto generateTokenDto(Member member) {
-    long now = (new Passenger().getTime());
+    long now = (new Date().getTime());
 
-    Passenger accessTokenExpiresIn = new Passenger(now + ACCESS_TOKEN_EXPIRE_TIME); //accessToken 생성
+    Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME); //accessToken 생성
     String accessToken = Jwts.builder()
         .setSubject(member.getUserId())
         .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
@@ -59,7 +59,7 @@ public class TokenProvider {
         .compact();
 
     String refreshToken = Jwts.builder()  //refreshToken 생성
-        .setExpiration(new Passenger(now + REFRESH_TOKEN_EXPRIRE_TIME))
+        .setExpiration(new Date(now + REFRESH_TOKEN_EXPRIRE_TIME))
         .signWith(key, SignatureAlgorithm.HS256)
         .compact();
 
