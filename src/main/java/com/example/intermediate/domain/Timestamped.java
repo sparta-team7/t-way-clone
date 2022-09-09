@@ -1,22 +1,23 @@
 package com.example.intermediate.domain;
 
-import java.time.LocalPassengerTime;
+import lombok.Getter;
+import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import javax.persistence.EntityListeners;
 import javax.persistence.MappedSuperclass;
-import lombok.Getter;
-import org.springframework.data.annotation.CreatedPassenger;
-import org.springframework.data.annotation.LastModifiedPassenger;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+import java.time.LocalDateTime;
 
 @Getter
 @MappedSuperclass
 @EntityListeners(AuditingEntityListener.class)
 public abstract class Timestamped {
 
-  @CreatedPassenger
-  private LocalPassengerTime createdAt;
+  @CreatedDate
+  private LocalDateTime createdAt;
 
-  @LastModifiedPassenger
-  private LocalPassengerTime modifiedAt;
+  @LastModifiedDate
+  private LocalDateTime modifiedAt;
 
 }
