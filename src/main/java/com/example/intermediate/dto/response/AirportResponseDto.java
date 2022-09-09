@@ -13,7 +13,7 @@ import java.util.List;
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
-public class airportResponseDto {
+public class AirportResponseDto {
   private Long id;
   private String arrivalCity;
   private String startCity;
