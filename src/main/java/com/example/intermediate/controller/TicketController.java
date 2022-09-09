@@ -7,6 +7,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -21,16 +22,16 @@ public class TicketController {
     return ticketService.createTicket(requestDto, request);
   }
 
-  //여행 목록 조회하기
-  @RequestMapping(value = "/ticket", method = RequestMethod.GET)
-  public ResponseDto<?> getAllTickets(HttpServletRequest request) {
-    return ticketService.getAllTicket(request);
-  }
+//  //여행 목록 조회하기
+//  @RequestMapping(value = "/ticket", method = RequestMethod.GET)
+//  public ResponseDto<?> getAllTickets(HttpServletRequest request) {
+//    return ticketService.getAllTicket(request);
+//  }
 
   //여행 상세 페이지 조회하기
-  @RequestMapping(value = "/ticket/{id}", method = RequestMethod.GET)
-  public ResponseDto<?> getTicket(@PathVariable Long id, HttpServletRequest request) {
-    return ticketService.getTicket(id, request);
+  @RequestMapping(value = "/ticket", method = RequestMethod.GET)
+  public ResponseDto<?> getTicket() throws IOException {
+    return ticketService.getTicket();
   }
 
   //여행 삭제하기
