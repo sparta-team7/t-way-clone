@@ -125,6 +125,22 @@ public class TicketService {
       return ResponseDto.success(responseDtoList);
     }
 
+    //탑승자 정보 저장
+    @Transactional
+    public void createPassenger(Passenger passenger) {
+        List<Ticket> ticketList = new ArrayList<>();
+
+        //해당 ticket의 cost가 없는 passenger를 days만큼 생성하여 passengerList에 더한다.
+        for (int i = 0; i < 5; i++) {
+            Passenger passenger = Passenger.builder()
+                    .ticket(ticket)
+                    .bookingNum(bookingNum)
+                    .build();
+            ticketList.add(passenger);
+        }
+        ticketRepository.saveAll(ticketList);
+    }
+
 
     //ticket 삭제 메서드. ticket에 포함된 하위 요소들도 모두 같이 삭제된다.
     @Transactional
