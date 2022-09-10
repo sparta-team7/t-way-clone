@@ -20,10 +20,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLEncoder;
+import java.io.UnsupportedEncodingException;
+import java.net.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -127,5 +125,45 @@ public class TicketService {
     // 유효성 검사 후 해당하는 member 반환
     return tokenProvider.getMemberFromAuthentication();
   }
+
+  public ResponseDto <?> getApi() throws IOException {
+
+  StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList"); /*URL*/
+    urlBuilder.append("?" + URLEncoder.encode("serviceKey", "UTF-8") + "=Rbd1ck8kI%2F5Z3493Di78Ls4RU4ojemoBWVtDTUWyC1O8ll3KhKbwZbIOqUtEeEAj4%2B7hv7z6knIbHLBZV03eng%3D%3D"); /*Service Key*/
+    urlBuilder.append("&" + URLEncoder.encode("pageNo", "UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
+    urlBuilder.append("&" + URLEncoder.encode("numOfRows", "UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
+    urlBuilder.append("&" + URLEncoder.encode("_type", "UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
+    urlBuilder.append("&" + URLEncoder.encode("depAirportId", "UTF-8") + "=" + URLEncoder.encode("NAARKJJ", "UTF-8")); /*출발공항ID*/
+    urlBuilder.append("&" + URLEncoder.encode("arrAirportId", "UTF-8") + "=" + URLEncoder.encode("NAARKPC", "UTF-8")); /*도착공항ID*/
+    urlBuilder.append("&" + URLEncoder.encode("depPlandTime", "UTF-8") + "=" + URLEncoder.encode("20201201", "UTF-8")); /*출발일(YYYYMMDD)*/
+    urlBuilder.append("&" + URLEncoder.encode("airlineId", "UTF-8") + "=" + URLEncoder.encode("AAR", "UTF-8")); /*항공사ID*/
+  URL url = new URL(urlBuilder.toString());
+  HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+    conn.setRequestMethod("GET");
+    conn.setRequestProperty("Content-type", "application/json");
+    System.out.println("Response code: " + conn.getResponseCode());
+  BufferedReader rd;
+    if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+    rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+  } else {
+    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+  }
+    if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
+    rd = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
+  } else {
+    rd = new BufferedReader(new InputStreamReader(conn.getErrorStream(), "UTF-8"));
+  }
+  StringBuilder sb = new StringBuilder();
+  String line;
+    while ((line = rd.readLine()) != null) {
+    sb.append(line);
+  }
+    rd.close();
+    conn.disconnect();
+    System.out.println(sb.toString());
+
+    return ResponseDto.success(sb);
+
+}
 
 }

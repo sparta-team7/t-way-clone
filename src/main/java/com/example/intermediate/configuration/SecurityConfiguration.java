@@ -70,6 +70,10 @@ public class SecurityConfiguration {
         .antMatchers("/member/signup").permitAll()
         .antMatchers("/member/login").permitAll()
         .antMatchers("/excel/**").permitAll()
+        .antMatchers("/api/**").permitAll()
+        .antMatchers("/ticket").permitAll()
+        .antMatchers("/getApi").permitAll()
+
         .anyRequest().authenticated()
 
         .and()

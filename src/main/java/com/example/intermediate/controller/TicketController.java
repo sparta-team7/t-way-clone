@@ -18,7 +18,7 @@ public class TicketController {
   //여행 생성하기
   @RequestMapping(value = "/ticket", method = RequestMethod.POST)
   public ResponseDto<?> createTicket(@RequestBody TicketRequestDto requestDto,
-                                   HttpServletRequest request) {
+                                     HttpServletRequest request) {
     return ticketService.createTicket(requestDto, request);
   }
 
@@ -32,12 +32,20 @@ public class TicketController {
   @RequestMapping(value = "/ticket", method = RequestMethod.GET)
   public ResponseDto<?> getTicket() throws IOException {
     return ticketService.getTicket();
+
   }
+
 
   //여행 삭제하기
   @RequestMapping(value = "/ticket/{id}", method = RequestMethod.DELETE)
   public ResponseDto<?> deleteTicket(@PathVariable Long id,
-                                   HttpServletRequest request) {
+                                     HttpServletRequest request) {
     return ticketService.deleteTicket(id, request);
+  }
+
+  @RequestMapping(value = "/getApi", method = RequestMethod.GET)
+  public ResponseDto<?> getApi() throws IOException {
+    return ticketService.getApi();
+
   }
 }
