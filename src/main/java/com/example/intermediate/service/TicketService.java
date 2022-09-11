@@ -2,7 +2,8 @@ package com.example.intermediate.service;
 
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.Ticket;
-import com.example.intermediate.dto.response.*;
+import com.example.intermediate.dto.response.AirportResponseDto;
+import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
 import com.example.intermediate.repository.PassengerRepository;
 import com.example.intermediate.repository.TicketRepository;
@@ -11,7 +12,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,18 +53,18 @@ public class TicketService {
     return ResponseDto.success(ticket);
   }
 
-  // 입력받은 id의 ticket 상세 정보가 담긴 dto 반환 메서드
+  // 입력받은  ticket 상세 정보가 담긴 dto 반환 메서드
   @Transactional(readOnly = true)
   public ResponseDto<?> getTicket() throws IOException, ParseException {
     StringBuilder urlBuilder = new StringBuilder("http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList"); /*URL*/
-    urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "Rbd1ck8kI/5Z3493Di78Ls4RU4ojemoBWVtDTUWyC1O8ll3KhKbwZbIOqUtEeEAj4+7hv7z6knIbHLBZV03eng=="); /*Service Key*/
+    urlBuilder.append("?" + URLEncoder.encode("serviceKey","UTF-8") + "=fwYR5PK7M3FDvT8cwjvXBGHqc5ycplW8Zb9OE8RAb8ASE%2BxQ1qrd6jKlPoeNXxrMwCMX4F69yIEmcpZ071Rqwg%3D%3D"); /*Service Key*/
     urlBuilder.append("&" + URLEncoder.encode("pageNo","UTF-8") + "=" + URLEncoder.encode("1", "UTF-8")); /*페이지번호*/
     urlBuilder.append("&" + URLEncoder.encode("numOfRows","UTF-8") + "=" + URLEncoder.encode("10", "UTF-8")); /*한 페이지 결과 수*/
     urlBuilder.append("&" + URLEncoder.encode("_type","UTF-8") + "=" + URLEncoder.encode("json", "UTF-8")); /*데이터 타입(xml, json)*/
     urlBuilder.append("&" + URLEncoder.encode("depAirportId","UTF-8") + "=" + URLEncoder.encode("NAARKSS", "UTF-8")); /*출발공항ID*/
     urlBuilder.append("&" + URLEncoder.encode("arrAirportId","UTF-8") + "=" + URLEncoder.encode("NAARKPC", "UTF-8")); /*도착공항ID*/
     urlBuilder.append("&" + URLEncoder.encode("depPlandTime","UTF-8") + "=" + URLEncoder.encode("20220910", "UTF-8")); /*출발일(YYYYMMDD)*/
-    urlBuilder.append("&" + URLEncoder.encode("airlineId","UTF-8") + "=" + URLEncoder.encode("TWB", "UTF-8")); /*항공사ID*/
+    urlBuilder.append("&" + URLEncoder.encode("airlineId","UTF-8") + "=" + URLEncoder.encode("AAR", "UTF-8")); /*항공사ID*/
     URL url = new URL(urlBuilder.toString());
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
@@ -81,6 +81,7 @@ public class TicketService {
     while ((line = rd.readLine()) != null) {
       sb.append(line);
     }
+    System.out.println(sb);
     rd.close();
     conn.disconnect();
     List<AirportResponseDto> responseDtoList = new ArrayList<>();
@@ -92,13 +93,19 @@ public class TicketService {
     JSONArray airportList = (JSONArray) items.get("item");
     for (Object o : airportList) {
       JSONObject airport = (JSONObject) o;
+      Long startTime = (Long) airport.get("depPlandTime");
+      Long endTime = (Long) airport.get("arrPlandTime");
+      Long takeHour = ((endTime - startTime)/60);
+      Long takeMinute = ((endTime - startTime)%60);
+
       responseDtoList.add(AirportResponseDto.builder()
               .endPoint(airport.get("arrAirportNm").toString())
-              .endTime(airport.get("arrPlandTime").toString())
+              .endTime(String.valueOf(endTime))
               .startPoint(airport.get("depAirportNm").toString())
-              .startTime(airport.get("depPlandTime").toString())
+              .startTime(String.valueOf(startTime))
               .charge(Integer.parseInt(airport.get("economyCharge").toString()))
               .flyNum(airport.get("vihicleId").toString())
+              .takeTime(takeHour+"시간"+takeMinute+"분")
               .build());
     }
     return ResponseDto.success(responseDtoList);
@@ -148,5 +155,7 @@ public class TicketService {
     // 유효성 검사 후 해당하는 member 반환
     return tokenProvider.getMemberFromAuthentication();
   }
+
+
 
 }
