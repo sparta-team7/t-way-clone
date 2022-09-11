@@ -125,7 +125,7 @@ public class TicketService {
       return ResponseDto.success(responseDtoList);
     }
 
-    //탑승자 정보 저장 !
+    //탑승자 정보 저장 !!
     @Transactional
     public void createPassenger(Passenger passenger) {
         List<Ticket> ticketList = new ArrayList<>();
