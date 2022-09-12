@@ -80,6 +80,27 @@ public class TokenProvider {
 
   }
 
+  public TokenDto kakaoTokenDto(String accessToken, String refreshToken, Member member) {
+    long now = (new Date().getTime());
+    Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+
+    RefreshToken refreshTokenObject = RefreshToken.builder()
+            .id(member.getId())
+            .member(member)
+            .keyValue(refreshToken)
+            .build();
+
+    refreshTokenRepository.save(refreshTokenObject);
+
+    return TokenDto.builder() //tokenDto 타입으로 토큰 생성
+            .grantType(BEARER_PREFIX)
+            .accessToken(accessToken)
+            .accessTokenExpiresIn(accessTokenExpiresIn.getTime())
+            .refreshToken(refreshToken)
+            .build();
+
+  }
+
   public Member getMemberFromAuthentication() { //유저 인증
     Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
     if (authentication == null || AnonymousAuthenticationToken.class.
@@ -90,10 +111,11 @@ public class TokenProvider {
   }
 
   public boolean valipassengerToken(String token) {  //토큰 유효성 검사
+
     try {
       Jwts.parserBuilder().setSigningKey(key).build().parseClaimsJws(token);
       return true;
-    } catch (SecurityException | MalformedJwtException e) {
+    } catch (SecurityException | MalformedJwtException e) {;
       log.info("Invalid JWT signature, 유효하지 않는 JWT 서명 입니다.");
     } catch (ExpiredJwtException e) {
       log.info("Expired JWT token, 만료된 JWT token 입니다.");

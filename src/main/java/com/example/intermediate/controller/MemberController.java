@@ -8,10 +8,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.io.IOException;
 
 @RequiredArgsConstructor
 @RestController
@@ -34,5 +33,12 @@ public class MemberController {
   @RequestMapping(value = "/member/logout", method = RequestMethod.POST)  //로그아웃 api
   public ResponseDto<?> logout(HttpServletRequest request) {
     return memberService.logout(request);
+  }
+
+
+  @RequestMapping(value = "/member/kakao/callback", method = RequestMethod.GET)  //로그아웃 api
+  public ResponseDto<?> kakaoCallback(@RequestParam String code, HttpServletResponse response) throws IOException {
+    System.out.println(code);
+    return memberService.getKakaoAccessToken(code, response);
   }
 }
