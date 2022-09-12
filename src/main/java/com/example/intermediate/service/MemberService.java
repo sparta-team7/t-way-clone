@@ -30,7 +30,6 @@ public class MemberService {
 
   private final PasswordEncoder passwordEncoder;
   private final TokenProvider tokenProvider;
-  private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
 
   @Transactional
   public ResponseDto<?> createMember(MemberRequestDto requestDto) {
