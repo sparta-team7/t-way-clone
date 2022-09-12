@@ -55,7 +55,7 @@ public class TicketService {
 
   // 입력받은  ticket 검색 정보가 담긴 dto 반환 메서드
   @Transactional(readOnly = true)
-  public ResponseDto<?> SearchTicket(String ticketAirportIdRequestDto, String ticketPlandTimeRequestDto,int count) throws IOException, ParseException, java.text.ParseException {
+  public ResponseDto<?> SearchTicket(String ticketAirportIdRequestDto, String ticketPlandTimeRequestDto) throws IOException, ParseException, java.text.ParseException {
     /*URL*/
     String urlBuilder = "http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList" + "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=fwYR5PK7M3FDvT8cwjvXBGHqc5ycplW8Zb9OE8RAb8ASE%2BxQ1qrd6jKlPoeNXxrMwCMX4F69yIEmcpZ071Rqwg%3D%3D" + /*Service Key*/
             "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) + /*페이지번호*/
