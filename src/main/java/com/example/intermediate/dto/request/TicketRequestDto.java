@@ -12,34 +12,6 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TicketRequestDto {
-
-  private String bookingnum;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
   // 도착 공항
   private String endPoint;
   // 출발 공항

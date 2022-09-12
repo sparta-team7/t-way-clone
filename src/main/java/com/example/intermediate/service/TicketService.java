@@ -1,7 +1,6 @@
 package com.example.intermediate.service;
 
-import com.example.intermediate.domain.Member;
-import com.example.intermediate.domain.Ticket;
+import com.example.intermediate.dto.request.TicketRequestDto;
 import com.example.intermediate.dto.response.AirportResponseDto;
 import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
@@ -15,7 +14,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.servlet.http.HttpServletRequest;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -27,7 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -58,17 +55,18 @@ public class TicketService {
 
   // 입력받은  ticket 검색 정보가 담긴 dto 반환 메서드
   @Transactional(readOnly = true)
-  public ResponseDto<?> SearchTicket() throws IOException, ParseException, java.text.ParseException {
+  public ResponseDto<?> SearchTicket(String ticketAirportIdRequestDto, String ticketPlandTimeRequestDto,int count) throws IOException, ParseException, java.text.ParseException {
     /*URL*/
     String urlBuilder = "http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList" + "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=fwYR5PK7M3FDvT8cwjvXBGHqc5ycplW8Zb9OE8RAb8ASE%2BxQ1qrd6jKlPoeNXxrMwCMX4F69yIEmcpZ071Rqwg%3D%3D" + /*Service Key*/
             "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) + /*페이지번호*/
             "&" + URLEncoder.encode("numOfRows", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("10", StandardCharsets.UTF_8) + /*한 페이지 결과 수*/
             "&" + URLEncoder.encode("_type", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("json", StandardCharsets.UTF_8) + /*데이터 타입(xml, json)*/
-            "&" + URLEncoder.encode("depAirportId", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("NAARKSS", StandardCharsets.UTF_8) + /*출발공항ID*/
+            "&" + URLEncoder.encode("depAirportId", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(ticketAirportIdRequestDto, StandardCharsets.UTF_8) + /*출발공항ID*/
             "&" + URLEncoder.encode("arrAirportId", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("NAARKPC", StandardCharsets.UTF_8) + /*도착공항ID*/
-            "&" + URLEncoder.encode("depPlandTime", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("20220910", StandardCharsets.UTF_8) + /*출발일(YYYYMMDD)*/
+            "&" + URLEncoder.encode("depPlandTime", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(ticketPlandTimeRequestDto, StandardCharsets.UTF_8) + /*출발일(YYYYMMDD)*/
             "&" + URLEncoder.encode("airlineId", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("AAR", StandardCharsets.UTF_8); /*항공사ID*/
     URL url = new URL(urlBuilder);
+    System.out.println(url);
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
     conn.setRequestProperty("Content-type", "application/json");
@@ -118,10 +116,13 @@ public class TicketService {
               .charge(Integer.parseInt(airport.get("economyCharge").toString()))
               .flyNum(airport.get("vihicleId").toString())
               .takeTime(calHour +"시간"+calMinutes+"분")
+
               .build());
     }
     return ResponseDto.success(responseDtoList);
   }
+
+
 
 
 //  //ticket 삭제 메서드. ticket에 포함된 하위 요소들도 모두 같이 삭제된다.
