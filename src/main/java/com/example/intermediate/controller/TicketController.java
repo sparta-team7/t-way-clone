@@ -30,9 +30,9 @@ public class TicketController {
   @RequestMapping(value = "/api/ticket", method = RequestMethod.GET)
   public ResponseDto<?> SearchTicket(@RequestParam(value = "depAirportId") String ticketStartRequestDto,
                                      @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto,
-                                      @RequestBody int count) throws IOException, ParseException, java.text.ParseException {
+                                     ) throws IOException, ParseException, java.text.ParseException {
     //return ResponseDto.success(ticketPlandTimeRequestDto);
-    return ticketService.SearchTicket(ticketStartRequestDto,ticketPlandTimeRequestDto,count);
+    return ticketService.SearchTicket(ticketStartRequestDto,ticketPlandTimeRequestDto);
 
   }
 
