@@ -35,6 +35,7 @@ public class TicketService {
   // 입력받은  ticket 검색 정보가 담긴 dto 반환 메서드
   @Transactional(readOnly = true)
   public ResponseDto<?> SearchTicket(String startIdCode, String ticketTime) throws IOException, ParseException, java.text.ParseException {
+
     /*URL*/
     String urlBuilder = "http://apis.data.go.kr/1613000/DmstcFlightNvgInfoService/getFlightOpratInfoList" + "?" + URLEncoder.encode("serviceKey", StandardCharsets.UTF_8) + "=fwYR5PK7M3FDvT8cwjvXBGHqc5ycplW8Zb9OE8RAb8ASE%2BxQ1qrd6jKlPoeNXxrMwCMX4F69yIEmcpZ071Rqwg%3D%3D" + /*Service Key*/
             "&" + URLEncoder.encode("pageNo", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("1", StandardCharsets.UTF_8) + /*페이지번호*/
@@ -78,7 +79,7 @@ public class TicketService {
       String endTime = String.valueOf(airport.get("arrPlandTime"));
       String startpoint = String.valueOf(airport.get("depAirportNm"));
 
-      //airpost에서 가져온 값을 날짜 형식으로 바꿈
+      //airpost에서 가져온 데이터를 날짜 형식으로 바꿈
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
       Date startDate = format.parse(startTime);
       Date endDate = format.parse(endTime);
@@ -87,6 +88,7 @@ public class TicketService {
       //분
       Long calMinutes = ((endDate.getTime() - startDate.getTime())/(1000*60)%60);
 
+      //리스트에 추가
       responseDtoList.add(AirportResponseDto.builder()
               .endPoint(airport.get("arrAirportNm").toString())
               .endTime(String.valueOf(endTime))

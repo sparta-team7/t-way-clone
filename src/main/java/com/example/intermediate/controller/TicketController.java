@@ -31,6 +31,8 @@ public class TicketController {
   public ResponseDto<?> SearchTicket(@RequestParam(value = "depAirportId") String ticketStartRequestDto,
                                      @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto
                                      ) throws IOException, ParseException, java.text.ParseException {
+
+
     //return ResponseDto.success(ticketPlandTimeRequestDto);
     return ticketService.SearchTicket(ticketStartRequestDto,ticketPlandTimeRequestDto);
 

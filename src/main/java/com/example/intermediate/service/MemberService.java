@@ -95,7 +95,6 @@ public class MemberService {
     Optional<Member> optionalMember = memberRepository.findByUserId(username);
     return optionalMember.orElse(null);
   }
-
   public void tokenToHeaders(TokenDto tokenDto, HttpServletResponse response) { //accessToken, refreshToken, 유효기간 헤더 추가
     response.addHeader("Authorization", "Bearer " + tokenDto.getAccessToken());
     response.addHeader("RefreshToken", tokenDto.getRefreshToken());
@@ -120,8 +119,8 @@ public class MemberService {
       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
       StringBuilder sb = new StringBuilder();
       sb.append("grant_type=authorization_code");
-      sb.append("&client_id="+apiKey); // TODO REST_API_KEY 입력
-      sb.append("&redirect_uri=http://localhost:8080/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+      sb.append("&client_id=" + apiKey); // TODO REST_API_KEY 입력
+      sb.append("&redirect_uri=http://localhost:3000/api/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
       sb.append("&code=" + code);
       bw.write(sb.toString());
       bw.flush();
@@ -129,7 +128,7 @@ public class MemberService {
       BufferedReader br;
       //결과 코드가 200이라면 성공
       int responseCode = conn.getResponseCode();
-      if(responseCode != 200)
+      if (responseCode != 200)
         br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
       else
         br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -153,10 +152,10 @@ public class MemberService {
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-    return getKakaoUser(access_Token,refresh_Token,expires_in, response);
+    return getKakaoUser(access_Token, refresh_Token, response);
   }
 
-  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token,int expires_in, HttpServletResponse response) {
+  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token, HttpServletResponse response) {
 
     String reqURL = "https://kapi.kakao.com/v2/user/me";
 
