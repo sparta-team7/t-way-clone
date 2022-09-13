@@ -1,6 +1,5 @@
 package com.example.intermediate.service;
 
-import com.example.intermediate.dto.request.TicketRequestDto;
 import com.example.intermediate.dto.response.AirportResponseDto;
 import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.jwt.TokenProvider;
@@ -66,7 +65,6 @@ public class TicketService {
             "&" + URLEncoder.encode("depPlandTime", StandardCharsets.UTF_8) + "=" + URLEncoder.encode(ticketPlandTimeRequestDto, StandardCharsets.UTF_8) + /*출발일(YYYYMMDD)*/
             "&" + URLEncoder.encode("airlineId", StandardCharsets.UTF_8) + "=" + URLEncoder.encode("AAR", StandardCharsets.UTF_8); /*항공사ID*/
     URL url = new URL(urlBuilder);
-    System.out.println(url);
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
     conn.setRequestProperty("Content-type", "application/json");
@@ -98,7 +96,7 @@ public class TicketService {
       String startTime = String.valueOf(airport.get("depPlandTime")) ;
       String endTime = String.valueOf(airport.get("arrPlandTime"));
 
-      //airpost에서 가져온 값을 날짜 형식으로 바꿈
+      //airpost에서 가져온 데이터를 날짜 형식으로 바꿈
       SimpleDateFormat format = new SimpleDateFormat("yyyyMMddHHmm");
       Date startDate = format.parse(startTime);
       Date endDate = format.parse(endTime);
@@ -107,7 +105,7 @@ public class TicketService {
       //분
       Long calMinutes = ((endDate.getTime() - startDate.getTime())/(1000*60)%60);
 
-
+      //리스트에 추가
       responseDtoList.add(AirportResponseDto.builder()
               .endPoint(airport.get("arrAirportNm").toString())
               .endTime(String.valueOf(endTime))
