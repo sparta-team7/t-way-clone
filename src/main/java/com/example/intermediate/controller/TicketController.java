@@ -29,7 +29,7 @@ public class TicketController {
   //여행 조회 페이지 조회하기
   @RequestMapping(value = "/api/ticket", method = RequestMethod.GET)
   public ResponseDto<?> SearchTicket(@RequestParam(value = "depAirportId") String ticketStartRequestDto,
-                                     @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto,
+                                     @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto
                                      ) throws IOException, ParseException, java.text.ParseException {
     //return ResponseDto.success(ticketPlandTimeRequestDto);
     return ticketService.SearchTicket(ticketStartRequestDto,ticketPlandTimeRequestDto);

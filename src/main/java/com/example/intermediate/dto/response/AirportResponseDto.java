@@ -16,8 +16,10 @@ import java.util.List;
 public class AirportResponseDto {
   // 도착 공항
   private String endPoint;
-  // 출발 공항
+  // 출발 공항 한글
   private String startPoint;
+  // 출발 공항 영어코드
+  private String startEng;
   // 항공기 편명
   private String flyNum;
   // 출발 시간
