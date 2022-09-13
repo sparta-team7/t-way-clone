@@ -121,7 +121,7 @@ public class MemberService {
       StringBuilder sb = new StringBuilder();
       sb.append("grant_type=authorization_code");
       sb.append("&client_id="+apiKey); // TODO REST_API_KEY 입력
-      sb.append("&redirect_uri=http://localhost:8080/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+      sb.append("&redirect_uri=http://3.39.254.156/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
       sb.append("&code=" + code);
       bw.write(sb.toString());
       bw.flush();
