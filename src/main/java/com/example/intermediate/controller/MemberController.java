@@ -37,7 +37,7 @@ public class MemberController {
 
 
   @RequestMapping(value = "/api/member/kakao/callback", method = RequestMethod.GET)  //로그아웃 api
-  public ResponseDto<?> kakaoCallback(@RequestParam String code, HttpServletResponse response) throws IOException {
+  public ResponseDto<?> kakaoCallback(@RequestParam("code") String code, HttpServletResponse response) throws IOException {
     System.out.println(code);
     return memberService.getKakaoAccessToken(code, response);
   }
