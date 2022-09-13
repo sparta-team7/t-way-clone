@@ -14,10 +14,12 @@ import java.net.URL;
 import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import lombok.RequiredArgsConstructor;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -30,7 +32,11 @@ public class MemberService {
 
   private final PasswordEncoder passwordEncoder;
   private final TokenProvider tokenProvider;
-  private static final String ADMIN_TOKEN = "AAABnv/xRVklrnYxKZ0aHgTBcXukeZygoC";
+  @Value("${admin.token}")
+  String ADMIN_TOKEN;
+
+  @Value("${restAPI.key}")
+  String apiKey;
 
   @Transactional
   public ResponseDto<?> createMember(MemberRequestDto requestDto) {
@@ -100,6 +106,7 @@ public class MemberService {
     String access_Token = "";
     String refresh_Token = "";
     String reqURL = "https://kauth.kakao.com/oauth/token";
+    int expires_in = 0;
 
     try {
       URL url = new URL(reqURL);
@@ -113,18 +120,22 @@ public class MemberService {
       BufferedWriter bw = new BufferedWriter(new OutputStreamWriter(conn.getOutputStream()));
       StringBuilder sb = new StringBuilder();
       sb.append("grant_type=authorization_code");
-      sb.append("&client_id=80fffb8fffdb43c7d627f693b84a4416"); // TODO REST_API_KEY 입력
+      sb.append("&client_id="+apiKey); // TODO REST_API_KEY 입력
       sb.append("&redirect_uri=http://localhost:8080/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
       sb.append("&code=" + code);
       bw.write(sb.toString());
       bw.flush();
 
+      BufferedReader br;
       //결과 코드가 200이라면 성공
       int responseCode = conn.getResponseCode();
-      System.out.println("responseCode : " + responseCode);
+      if(responseCode != 200)
+        br = new BufferedReader(new InputStreamReader(conn.getErrorStream()));
+      else
+        br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
 
       //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
-      BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
+
       String line = "";
       String result = "";
       while ((line = br.readLine()) != null) {
@@ -132,22 +143,20 @@ public class MemberService {
       }
       JSONParser parser = new JSONParser();
       JSONObject jsonObject = (JSONObject) parser.parse(result);
-      JSONObject kakao_account = (JSONObject)jsonObject.get("kakao_account");
+
+
       access_Token = jsonObject.get("access_token").toString();
       refresh_Token = jsonObject.get("refresh_token").toString();
-      System.out.println("refresh_token = " + refresh_Token);
-      System.out.println("access_token = " + access_Token);
-      System.out.println("response body : " + result);
 
       bw.close();
       br.close();
     } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-    return getKakaoUser(access_Token,refresh_Token, response);
+    return getKakaoUser(access_Token,refresh_Token,expires_in, response);
   }
 
-  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token, HttpServletResponse response) {
+  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token,int expires_in, HttpServletResponse response) {
 
     String reqURL = "https://kapi.kakao.com/v2/user/me";
 
@@ -162,7 +171,6 @@ public class MemberService {
 
       //결과 코드가 200이라면 성공
       int responseCode = conn.getResponseCode();
-      System.out.println("responseCode : " + responseCode);
 
       //요청을 통해 얻은 JSON타입의 Response 메세지 읽어오기
       BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()));
@@ -178,7 +186,9 @@ public class MemberService {
       String kakaoId = jsonObject.get("id").toString();
       JSONObject kakao_account = (JSONObject)jsonObject.get("kakao_account");
       String email = kakao_account.get("email").toString();
+
       Member member = memberRepository.findByUserId(email).orElse(null);
+
       if(null == member) {
         String password = kakaoId + ADMIN_TOKEN;
         String encodedPassword = passwordEncoder.encode(password);
@@ -187,13 +197,15 @@ public class MemberService {
                 .userId(email)
                 .password(encodedPassword)
                 .build();
+
+        memberRepository.save(member);
+
       }
-      memberRepository.save(member);
-      System.out.println(member.getUserId()+" "+member.getId());
-      TokenDto tokenDto = tokenProvider.kakaoTokenDto(access_token,refresh_token,member);
+      TokenDto tokenDto = tokenProvider.kakaoTokenDto(refresh_token,member);
       tokenToHeaders(tokenDto, response);
       br.close();
-
+      System.out.println(tokenDto.getAccessToken());
+      System.out.println(tokenDto.getRefreshToken());
       return ResponseDto.success(member.getUserId() + " 로그인에 성공했습니다");
 
     } catch (IOException | ParseException e) {
