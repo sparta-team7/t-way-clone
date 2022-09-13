@@ -120,7 +120,7 @@ public class MemberService {
       StringBuilder sb = new StringBuilder();
       sb.append("grant_type=authorization_code");
       sb.append("&client_id=" + apiKey); // TODO REST_API_KEY 입력
-      sb.append("&redirect_uri=http://localhost:3000/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
+      sb.append("&redirect_uri=http://localhost:3000/api/member/kakao/callback"); // TODO 인가코드 받은 redirect_uri 입력
       sb.append("&code=" + code);
       bw.write(sb.toString());
       bw.flush();
@@ -140,28 +140,22 @@ public class MemberService {
       while ((line = br.readLine()) != null) {
         result += line;
       }
-      return ResponseDto.success(result);
-    } catch (IOException e) {
+      JSONParser parser = new JSONParser();
+      JSONObject jsonObject = (JSONObject) parser.parse(result);
+
+
+      access_Token = jsonObject.get("access_token").toString();
+      refresh_Token = jsonObject.get("refresh_token").toString();
+
+      bw.close();
+      br.close();
+    } catch (IOException | ParseException e) {
       e.printStackTrace();
     }
-    return ResponseDto.success("여기까지 문제없음");
+    return getKakaoUser(access_Token, refresh_Token, response);
   }
-//      JSONParser parser = new JSONParser();
-//      JSONObject jsonObject = (JSONObject) parser.parse(result);
-//
-//
-//      access_Token = jsonObject.get("access_token").toString();
-//      refresh_Token = jsonObject.get("refresh_token").toString();
-//
-//      bw.close();
-//      br.close();
-//    } catch (IOException | ParseException e) {
-//      e.printStackTrace();
-//    }
-//    return getKakaoUser(access_Token,refresh_Token,expires_in, response);
 
-
-  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token,int expires_in, HttpServletResponse response) {
+  public ResponseDto<?> getKakaoUser(String access_token,String refresh_token, HttpServletResponse response) {
 
     String reqURL = "https://kapi.kakao.com/v2/user/me";
 
