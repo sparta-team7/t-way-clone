@@ -16,6 +16,7 @@ import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
 import java.security.Key;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Optional;
 
@@ -80,14 +81,29 @@ public class TokenProvider {
 
   }
 
-  public TokenDto kakaoTokenDto(String accessToken, String refreshToken, Member member) {
+  public TokenDto kakaoTokenDto(String refresh_Token, Member member) {
+
     long now = (new Date().getTime());
-    Date accessTokenExpiresIn = new Date(now + ACCESS_TOKEN_EXPIRE_TIME);
+    Date accessTokenExpiresIn = new Date(now + 21599000L);
+
+    String accessToken = Jwts.builder()
+            .setSubject(member.getUserId())
+            .claim(AUTHORITIES_KEY, Authority.ROLE_MEMBER.toString())
+            .setExpiration(accessTokenExpiresIn)
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
+
+    String refreshToken = Jwts.builder()  //refreshToken 생성
+            .setExpiration(new Date(now + 5183999000L))
+            .signWith(key, SignatureAlgorithm.HS256)
+            .compact();
+
 
     RefreshToken refreshTokenObject = RefreshToken.builder()
             .id(member.getId())
             .member(member)
             .keyValue(refreshToken)
+            .kakao(refresh_Token)
             .build();
 
     refreshTokenRepository.save(refreshTokenObject);
