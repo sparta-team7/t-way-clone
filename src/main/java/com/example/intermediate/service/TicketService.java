@@ -190,8 +190,10 @@ public class TicketService {
                     .bookingNum(ticket.getBookingNum())
                     .build();
 
-            return ResponseDto.success(ticket);
+            return ResponseDto.success(ticketResponseDto);
         }
+
+
     public Member isValipassengerAccess(HttpServletRequest request){
         //헤더에 Authorization, RefrehToken 값이 없거나 유효하지 않으면 null
         if (null == request.getHeader("RefreshToken") ||
