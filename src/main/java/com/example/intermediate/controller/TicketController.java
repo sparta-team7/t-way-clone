@@ -1,11 +1,7 @@
 package com.example.intermediate.controller;
 
-import com.example.intermediate.domain.Passenger;
-import com.example.intermediate.dto.request.MemberRequestDto;
-import com.example.intermediate.dto.request.PassengerRequestDto;
 import com.example.intermediate.dto.request.TicketRequestDto;
 import com.example.intermediate.dto.response.ResponseDto;
-import com.example.intermediate.service.PassengerService;
 import com.example.intermediate.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -13,7 +9,6 @@ import org.json.simple.parser.ParseException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.validation.Valid;
 import java.io.IOException;
 
 @Slf4j
@@ -28,17 +23,16 @@ public class TicketController {
     public ResponseDto<?> SearchTicket () throws IOException, ParseException {
         return ticketService.SearchTicket();
     }
-
     //티켓 정보 입력
     @RequestMapping(value = "/api/auth/booking", method = RequestMethod.POST)
     public ResponseDto<?> creatTicket(@RequestBody TicketRequestDto requestDto,HttpServletRequest request) {
         return ticketService.createTicket(requestDto,request);
     }
-
     //나의 예약 조회하기
     @RequestMapping(value = "/api/auth/mybooking", method = RequestMethod.GET)
-    public ResponseDto<?> getTicket () throws IOException, ParseException {
-        return ticketService.getTicket();
+    public ResponseDto<?> getTicket (@RequestParam String bookingNum) {
+        System.out.println(bookingNum);
+        return ticketService.getTicket(bookingNum);
     }
 
     //여행 상세 페이지 조회하기

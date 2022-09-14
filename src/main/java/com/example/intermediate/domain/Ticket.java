@@ -1,5 +1,6 @@
 package com.example.intermediate.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -49,11 +50,12 @@ public class Ticket {
   private String bookingNum;
 
   //가격 계산한다고
-  @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+
+  @OneToMany(mappedBy ="ticket", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
   private List<Passenger> passengerList = new ArrayList<>();
 
   //여행을 작성한 member
-  @JoinColumn(name = "member_id", nullable = false)
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Member member;
+//  @JoinColumn(name = "member_id", nullable = false)
+//  @ManyToOne(fetch = FetchType.LAZY)
+//  private Member member;
 }

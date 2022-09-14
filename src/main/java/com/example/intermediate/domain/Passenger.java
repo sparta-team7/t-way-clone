@@ -1,5 +1,6 @@
 package com.example.intermediate.domain;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -38,6 +39,7 @@ public class Passenger extends Timestamped {
 
   @Column(nullable = false)
   private String number;
+
 
   @JoinColumn(name = "ticket_id", nullable = false)
   @ManyToOne(fetch = FetchType.LAZY)

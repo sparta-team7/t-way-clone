@@ -26,5 +26,8 @@ public class TicketResponseDto {
   private int charge;
   private String bookingNum;
 
-  private List<PassengerRequestDto> passengerList = new ArrayList<>();
+  private List<PassengerResponseDto> passengerList = new ArrayList<>();
+
+
+
 }

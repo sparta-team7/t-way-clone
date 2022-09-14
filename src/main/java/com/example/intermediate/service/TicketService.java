@@ -59,6 +59,7 @@ public class TicketService {
         Random random = new Random();
         String bookingNum = (int) (Math.random() * 89991) + 10000 + "";
 
+
         //dto에 담긴 정보로 Ticket 생성
         Ticket ticket = Ticket.builder()
                 .bookingNum(bookingNum)
@@ -89,6 +90,8 @@ public class TicketService {
 
             passengertList.add(passenger);
         }
+        System.out.println(passengertList.get(0).getId());
+
         passengerRepository.saveAll(passengertList);
         return ResponseDto.success(bookingNum);
     }
@@ -152,90 +155,58 @@ public class TicketService {
         }
         return ResponseDto.success(responseDtoList);
     }
-    //탑승자 정보 입력
-//    @Transactional
-//
-//    public ResponseDto<?> createPassenger(PassengerRequestDto requestDto, HttpServletRequest request) {
-//        Passenger passenger = Passenger.builder()
-//
-//
-//                .gender(requestDto.getGender())
-//                .country(requestDto.getCountry())
-//                .name(requestDto.getName())
-//                .birth(requestDto.getBirth())
-//                .email(requestDto.getEmail())
-//                .number(requestDto.getNumber())
-//                .build();
-//
-//        passengerRepository.save(passenger);
-//        return ResponseDto.success(passenger);
-//    }
 
-    //    @Transactional
-//    public ResponseDto<?> createPassenger(RequestBody request) {
-//    //메소드 공부
-//        //dto에 담긴 정보로 Passenger 생성
-//        Passenger passenger = Passenger.builder().build();
-//        passengerRepository.save(passenger);
-//        return ResponseDto.success(passenger);
-//    }
-//
     //티켓 조회하기
     @Transactional(readOnly = true)
-    public ResponseDto<?> getTicket(HttpServletRequest request ){  if (null == request.getHeader("RefreshToken")) {
-        return ResponseDto.fail("MEMBER_NOT_FOUND",
-                "로그인이 필요합니다.");
-    }
-
-        if (null == request.getHeader("Authorization")) {
-            return ResponseDto.fail("MEMBER_NOT_FOUND",
-                    "로그인이 필요합니다.");
-        }
-
-
-
-
+    public ResponseDto<?> getTicket(String bookingNum) {
 //    public String getTicket(String bookingNum) throws IOException, ParseException {
-
         Ticket ticket = ticketRepository.findByBookingNum(bookingNum).orElse(null);
         List<Passenger> passengerList = passengerRepository.findAllByTicket(ticket);
+        List<PassengerResponseDto> passengerResponseDtoList = new ArrayList<>();
+//
+        for (int i = 0; i <passengerList.size();  i++) {
 
+            Passenger passenger = passengerList.get(i);
+            PassengerResponseDto passengerResponseDto = PassengerResponseDto.builder()
+                    .gender(passenger.getGender())
+                    .country(passenger.getCountry())
+                    .name(passenger.getName())
+                    .birth(passenger.getBirth())
+                    .email(passenger.getEmail())
+                    .number(passenger.getNumber())
+                    .build();
+            passengerResponseDtoList.add(passengerResponseDto);
+        }
 
-        Ticket ticket = Ticket.builder()
-                .bookingNum(bookingNum)
-                .flyNum(ticketRepository.getFlyNum())
-                .startPoint(ticketRepository.getStartPoint())
-                .endPoint(ticketRepository.getEndPoint())
-                .startTime(requeticketRepositorystDto.getStartTime())
-                .endTime(ticketRepository.getEndTime())
-                .takeTime(ticketRepository.getTakeTime())
-                .charge(ticketRepository.getCharge())
-                .build();
-        );
-    }
-        return ResponseDto.success(ticketResponseDtoList);
-
-        List<PassengerResponseDto> PassengerResponseDto = new ArrayList<>();
-        for (int i = 0; i < requestDto.getPassengerList().size(); i++) {
-            PassengerRequestDto passengerRequestDto = requestDto.getPassengerList().get(i);
-            Passenger passenger = Passenger.builder()
-                    .gender(passengerRequestDto.getGender())
-                    .country(passengerRequestDto.getCountry())
-                    .name(passengerRequestDto.getName())
-                    .birth(passengerRequestDto.getBirth())
-                    .email(passengerRequestDto.getEmail())
-                    .number(passengerRequestDto.getNumber())
-                    .ticket(ticket)
+            TicketResponseDto ticketResponseDto = TicketResponseDto.builder()
+                    .passengerList(passengerResponseDtoList)
+                    .id(ticket.getId())
+                    .flyNum(ticket.getFlyNum())
+                    .endTime(ticket.getEndTime())
+                    .startPoint(ticket.getStartPoint())
+                    .startTime(ticket.getStartTime())
+                    .endPoint(ticket.getEndPoint())
+                    .takeTime(ticket.getTakeTime())
+                    .bookingNum(ticket.getBookingNum())
                     .build();
 
-            passengerRepository.saveAll(passengertList);
+            return ResponseDto.success(ticket);
         }
+    public Member isValipassengerAccess(HttpServletRequest request){
+        //헤더에 Authorization, RefrehToken 값이 없거나 유효하지 않으면 null
+        if (null == request.getHeader("RefreshToken") ||
+                !tokenProvider.valipassengerToken(request.getHeader("RefreshToken")) ||
+                null == request.getHeader("Authorization")) {
+            return null;
+        }
+
+        // 유효성 검사 후 해당하는 member 반환
+        return tokenProvider.getMemberFromAuthentication();
     }
+}
 
 
-
-
-    //ticket 삭제 메서드. ticket에 포함된 하위 요소들도 모두 같이 삭제된다.
+        //ticket 삭제 메서드. ticket에 포함된 하위 요소들도 모두 같이 삭제된다.
 //    @Transactional
 //    public ResponseDto<?> deleteTicket(Long id, HttpServletRequest request) {
 //
@@ -251,19 +222,7 @@ public class TicketService {
 //        }
 //    }
 
-//    @Transactional
-//    public PassengerResponseDto<?> createPassenger(PassengerRequestDto requestDto) {
-//
-//        Passenger passenger = Passenger.builder()  //탑승자 생성
-//                .userId(requestDto.getUserId())
-//                .gender(requestDto.getGender())
-//                .build();
-//        passengerRepository.save(passenger);
-//        return ResponseDto.success("예약에 성공했습니다");
-//    }
-//
-
-      //ticket과 연결된 passenger 삭제
+        //ticket과 연결된 passenger 삭제
 //      passengerRepository.deleteAllByTicket(ticket);
 //      //ticket 삭제
 //      ticketRepository.delete(ticket);
@@ -271,22 +230,10 @@ public class TicketService {
 //      return ResponseDto.success("delete success");
 //    }
 
-    //ticket 존재 여부 확인 메서드. 해당 id의 ticket이 존재하면 ticket을 반환하고 없으면 null
+        //ticket 존재 여부 확인 메서드. 해당 id의 ticket이 존재하면 ticket을 반환하고 없으면 null
 
 
-    //토큰 유효성 검사하는 메서드. 정상적인 접근(토큰이 들어있으며 유효함)이면 해당 member 반환, 아니면 null
-    public Member isValipassengerAccess(HttpServletRequest request) {
+        //토큰 유효성 검사하는 메서드. 정상적인 접근(토큰이 들어있으며 유효함)이면 해당 member 반환, 아니면 null
 
-      //헤더에 Authorization, RefrehToken 값이 없거나 유효하지 않으면 null
-      if (null == request.getHeader("RefreshToken") ||
-              !tokenProvider.valipassengerToken(request.getHeader("RefreshToken")) ||
-              null == request.getHeader("Authorization")) {
-        return null;
-      }
 
-      // 유효성 검사 후 해당하는 member 반환
-      return tokenProvider.getMemberFromAuthentication();
-    }
-
-  }
 
