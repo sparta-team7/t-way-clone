@@ -55,10 +55,15 @@ public class TicketService {
                     "로그인이 필요합니다.");
         }
 
-        //랜덤함수+ 중복제거 숫자 13자리 for문 돌려서 랜덤값 안나오게 넹
+        //랜덤함수+ 중복제거 숫자 10자리 for문 돌려서 랜덤값 안나오게 넹
         Random random = new Random();
-        String bookingNum = (int) (Math.random() * 89991) + 10000 + "";
+        String bookingNum = (int) (Math.random() * 89991) + 1000000000 + "";
 
+//        Random random = new Random(System.nanoTime());
+//        for(int i =0; i < 14; i++) {
+//            System.out.print((int)(random.nextInt(10)) + " ");
+//        }
+//        System.out.println("");
 
         //dto에 담긴 정보로 Ticket 생성
         Ticket ticket = Ticket.builder()
