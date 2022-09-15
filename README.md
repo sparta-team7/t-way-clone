@@ -19,8 +19,7 @@ Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
 서나연<br>
       4.OAuth2를 이용한 카카오톡 소셜 로그인 (완료)<br>
   
-
-     4.OAuth2를 이용한 카카오톡 소셜 로그인(완료)
+    
 📗 와이어프레임<br>
 https://user-images.githubusercontent.com/110470208/190321574-f8a52e2a-4f46-4d0e-a8e7-64a3b67cccf7.png
 
