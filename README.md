@@ -4,7 +4,7 @@ Frontend GitHub : https://github.com/lee123so/Clone-T-way-Front_end<br>
 Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
 
 <h2>✌️ 프로젝트 소개</h2><br>
-
+T-way 항공 클론코딩<br>
 <h2>📅 제작 기간<br></h2>
 2022.09. 09 ~ 2022. 09. 15<br>
 👪 구성원 & 담당<br>
@@ -43,11 +43,12 @@ Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
     - 구매 일자는 입력하지 않고 예약 번호로만 조회한다.<br>
 
 👷 사용한 기술<br>
-Back-end : SPring;
-Front-end : React;
+Back-end : SPring;<br>
+Front-end : React;<br>
 😡 Trouble Shooting<br>
-Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type
-'com.example.intermediate.discount.RateDiscountPolicy' that could not be found.
-라는 오류가 RateDiscountPolicy에 @Component가 들어가지 않아서 생기는 오류였다. 
-
-
+Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type<br>
+'com.example.intermediate.discount.RateDiscountPolicy' that could not be found.<br>
+라는 오류가 생겼는데 RateDiscountPolicy에 @Component가 들어가지 않아서 생기는 오류였다. <br>
+스프링은 컴포넌트 스캔을 통해 의존 관계를 주입해준다.<br>
+의존관계가 주입된 Bean도 다른 Bean을 주입받을 수 있는데,<br>
+컴포넌트 스캔은 @Component가 달려있는 Bean만 의존관계를 주입시켜줄 수 있다.<br>
