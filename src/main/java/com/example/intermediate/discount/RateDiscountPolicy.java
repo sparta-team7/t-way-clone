@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class RateDiscountPolicy implements DiscountPolicy{
+    //50프로 할인
     private int discountpersent = 50;
 
     @Override

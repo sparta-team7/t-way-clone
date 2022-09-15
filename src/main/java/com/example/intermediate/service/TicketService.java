@@ -94,8 +94,12 @@ public class TicketService {
       //분
       Long calMinutes = ((endDate.getTime() - startDate.getTime()) / (1000 * 60) % 60);
 
+      int cargeDc = 0;
+      //로그인시에만 할인정책 적용
       if (tokenProvider.valipassengerToken(httpServletRequest.getHeader("RefreshToken"))) {
         Member member = tokenProvider.getMemberFromAuthentication();
+        cargeDc = rateDiscountPolicy.discount(member, Integer.parseInt(airport.get("economyCharge").toString()));
+      }
 
         //리스트에 추가
         responseDtoList.add(AirportResponseDto.builder()
@@ -105,16 +109,16 @@ public class TicketService {
                 .startEng(NameEnum.valueOf(startIdCode).getAirCode())
                 .startTime(String.valueOf(startTime))
                 .charge(Integer.parseInt(airport.get("economyCharge").toString()))
-                .chargeDc(rateDiscountPolicy.discount(member, Integer.parseInt(airport.get("economyCharge").toString())))
+                .chargeDc(cargeDc)
                 .flyNum(airport.get("vihicleId").toString())
                 .takeTime(calHour + "시간" + calMinutes + "분")
                 .build());
 
       }
-    }
     return ResponseDto.success(responseDtoList);
 
+    }
   }
 
 
-}
+
