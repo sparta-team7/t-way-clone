@@ -1,16 +1,18 @@
-# Mentoring-Assignment-Intermediate
+✈ T'way-air 클론코딩 ✈
+Innovation-Camp Week7 _ 7조
+Frontend GitHub : https://github.com/lee123so/Clone-T-way-Front_end
+Backend GitHub : https://github.com/sparta-team7/t-way-clone
 
+✌️ 프로젝트 소개
+📅 제작 기간
+09 ~ 2022. 09. 15
+👪 구성원 & 담당
+📗 와이어프레임
+image
 
-##미니프로젝트 7조
+📘 ERD
+image
 
-###T-WAY 항공 클론 코딩!<br>
-<h2>
-ERD
-</h2>
-
-<img width="835" alt="Untitled" src="https://user-images.githubusercontent.com/110470208/190319233-940757cd-811e-4cff-8ee4-11193707e64f.png"><br>
-
-<h2>
-  api
-  </h2>
-https://www.notion.so/1d46401dd4d74d039035fa5e16608a4d?v=439854b7bb9644efaf6dc3a14b3ea597
+📙 API
+👷 사용한 기술
+😡 Trouble Shooting
