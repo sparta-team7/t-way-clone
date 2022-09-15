@@ -3,8 +3,9 @@ Innovation-Camp Week7 _ 7조<br>
 Frontend GitHub : https://github.com/lee123so/Clone-T-way-Front_end<br>
 Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
 
-<h2>✌️ 프로젝트 소개</h2><br>
+<h2>✌️ 프로젝트 소개</h2>
 T-way 항공 클론코딩<br>
+
 <h2>📅 제작 기간<br></h2>
 2022.09. 09 ~ 2022. 09. 15<br>
 👪 구성원 & 담당<br>
