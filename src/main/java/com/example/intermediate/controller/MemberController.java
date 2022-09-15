@@ -17,7 +17,7 @@ import java.io.IOException;
 public class MemberController {
 
   private final MemberService memberService;
-
+  //회원가입
   @RequestMapping(value = "/api/member/signup", method = RequestMethod.POST)  //회원가입 api
   public ResponseDto<?> signup(@RequestBody @Valid MemberRequestDto requestDto) {
     return memberService.createMember(requestDto);
