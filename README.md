@@ -7,16 +7,16 @@ Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
 <h2>📅 제작 기간<br></h2>
 09 ~ 2022. 09. 15<br>
 👪 구성원 & 담당<br>
-민식
+김민식<br>
       1. ticket 조회 기능(소요시간 계산 및 파라미터로 입력 적용)<br>
             - 소요시간 계산  완료<br>
             - 파라미터 입력 완료<br>
             - 맴버쉽 기능 미완료(등급 설정 미완성)<br>
-주현<br>
+이주현<br>
       2. 탑승자 정보 입력 후 예약(완료)<br>
       3.  나의 예약(완료)<br<br>
 
-나연<br>
+서나연<br>
       4.OAuth2를 이용한 카카오톡 소셜 로그인 (완료)<br>
   
 
