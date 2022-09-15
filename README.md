@@ -30,6 +30,9 @@ https://user-images.githubusercontent.com/110470208/190321574-f8a52e2a-4f46-4d0e
 📙 API<br>
 ![7조 api](https://user-images.githubusercontent.com/110470208/190321495-94bdaf44-4f72-4335-a58f-ba20df9bb632.JPG)
 
+<h2>✨ 주요 기능</h2><br>
+
+<br>
 
 👷 사용한 기술<br>
 Back-end : SPring;
