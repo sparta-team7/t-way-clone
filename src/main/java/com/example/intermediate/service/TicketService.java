@@ -57,6 +57,7 @@ public class TicketService {
 
         //랜덤함수+ 중복제거 숫자 10자리 for문 돌려서 랜덤값 안나오게 넹
         Random random = new Random();
+
         String bookingNum = (int) (Math.random() * 89991) + 1000000000 + "";
 
 //        Random random = new Random(System.nanoTime());
