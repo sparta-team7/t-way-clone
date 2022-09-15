@@ -40,12 +40,12 @@ T-way 항공 클론코딩<br>
     - 현장결제만 지원하며 수화물이 고정되어있다. (선택항목을 줄여 더욱 간편하고 빠르다)<br>
     - 편도(도착지 제주도로 한정) 항공편만 예약이 가능하다<br>
 - 예약 조회<br>
-    - 구매 일자는 입력하지 않고 예약 번호로만 조회한다.<br>
+    - 구매 일자는 입력하지 않고 예약 번호로만 조회한다.<br><br>
 
-👷 사용한 기술<br>
+<h2>👷 사용한 기술</h2><br>
 Back-end : SPring;<br>
-Front-end : React;<br>
-😡 Trouble Shooting<br>
+Front-end : React;<br><br>
+<h2>😡 Trouble Shooting</h2><br>
 Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type<br>
 'com.example.intermediate.discount.RateDiscountPolicy' that could not be found.<br>
 라는 오류가 생겼는데 RateDiscountPolicy에 @Component가 들어가지 않아서 생기는 오류였다. <br>
