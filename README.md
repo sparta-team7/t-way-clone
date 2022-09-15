@@ -44,7 +44,7 @@ T-way 항공 클론코딩<br>
     - 구매 일자는 입력하지 않고 예약 번호로만 조회한다.<br><br>
 
 <h2>👷 사용한 기술</h2><br>
-Back-end : SPring;<br>
+Back-end : Spring;<br>
 Front-end : React;<br><br>
 <h2>😡 Trouble Shooting</h2><br>
 Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type<br>
@@ -53,3 +53,8 @@ Parameter 0 of constructor in com.example.intermediate.service.TicketService req
 스프링은 컴포넌트 스캔을 통해 의존 관계를 주입해준다.<br>
 의존관계가 주입된 Bean도 다른 Bean을 주입받을 수 있는데,<br>
 컴포넌트 스캔은 @Component가 달려있는 Bean만 의존관계를 주입시켜줄 수 있다.<br>
+
+
+
+Notion:
+https://www.notion.so/7-Tway-7f5f845972d24632882c9e52a356fc4a
