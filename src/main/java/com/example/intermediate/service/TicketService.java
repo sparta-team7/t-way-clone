@@ -146,6 +146,11 @@ public class TicketService {
             return ResponseDto.fail("MEMBER_NOT_FOUND",
                     "로그인이 필요합니다.");
         }
+        Member member = tokenProvider.getMemberFromAuthentication();
+        if (null == member){
+            return ResponseDto.fail("MEMBER_NOT_FOUND",
+                    "존재하지 않는 사용자입니다.");
+        }
 
         //랜덤함수+ 중복제거 숫자 10자리 for문 돌려서 랜덤값 안나오게
         Random random = new Random();
@@ -161,6 +166,7 @@ public class TicketService {
                 .startTime(requestDto.getStartTime())
                 .endTime(requestDto.getEndTime())
                 .takeTime(requestDto.getTakeTime())
+                .member(member)
                 .charge(requestDto.getCharge())
                 .build();
 

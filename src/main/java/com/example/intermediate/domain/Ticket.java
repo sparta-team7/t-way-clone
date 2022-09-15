@@ -1,6 +1,5 @@
 package com.example.intermediate.domain;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Getter;
@@ -42,12 +41,17 @@ public class Ticket {
   @Column(nullable = false)
   private String takeTime;
 
+
   // 항공편 가격
   @Column(nullable = false)
   private int charge;
 
   @Column(nullable = false)
   private String bookingNum;
+
+  @JoinColumn(name = "member_id", nullable = false)
+  @ManyToOne(fetch = FetchType.LAZY)
+  private Member member;
 
   //가격 계산한다고
 
