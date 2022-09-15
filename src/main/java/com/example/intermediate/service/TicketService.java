@@ -133,7 +133,7 @@ public class TicketService {
 
     }
 
-    //ticket 생성 메서드
+    //ticket 생성
     @Transactional
 
     public ResponseDto<?> createTicket(TicketRequestDto requestDto, HttpServletRequest request) {
@@ -166,7 +166,6 @@ public class TicketService {
 
         ticketRepository.save(ticket);
 
-        // 복습
         List<Passenger> passengertList = new ArrayList<>();
         for (int i = 0; i < requestDto.getPassengerList().size(); i++) {
             PassengerRequestDto passengerRequestDto = requestDto.getPassengerList().get(i);
