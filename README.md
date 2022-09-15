@@ -7,4 +7,5 @@
 <h2>
 ERD
 </h2>
-https://s3-us-west-2.amazonaws.com/secure.notion-static.com/30e8b11d-96ce-4d51-9cfb-24a1368940ce/Untitled.png
+
+<img width="835" alt="Untitled" src="https://user-images.githubusercontent.com/110470208/190319233-940757cd-811e-4cff-8ee4-11193707e64f.png">
