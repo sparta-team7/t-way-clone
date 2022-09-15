@@ -24,7 +24,7 @@ public class AirportResponseDto {
   // 여행 종료일
   private String endTime;
   // 소요시간
-  private int takeTime;
+  private String takeTime;
   // 항공편 가격
   private int charge;
   private int chargeDc;
