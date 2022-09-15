@@ -49,9 +49,6 @@ public class Ticket {
   @Column(nullable = false)
   private String bookingNum;
 
-  @JoinColumn(name = "member_id", nullable = false)
-  @ManyToOne(fetch = FetchType.LAZY)
-  private Member member;
 
   //가격 계산한다고
 

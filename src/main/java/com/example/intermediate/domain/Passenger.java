@@ -15,7 +15,7 @@ import javax.persistence.*;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Passenger extends Timestamped {
+public class Passenger {
 
 
   @Id

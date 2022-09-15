@@ -166,7 +166,6 @@ public class TicketService {
                 .startTime(requestDto.getStartTime())
                 .endTime(requestDto.getEndTime())
                 .takeTime(requestDto.getTakeTime())
-                .member(member)
                 .charge(requestDto.getCharge())
                 .build();
 
@@ -187,7 +186,6 @@ public class TicketService {
 
             passengertList.add(passenger);
         }
-        System.out.println(passengertList.get(0).getId());
 
         passengerRepository.saveAll(passengertList);
         return ResponseDto.success(bookingNum);
