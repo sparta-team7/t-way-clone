@@ -5,9 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //Ticket 상세 조회용 DTO
 @Builder
 @Getter
@@ -30,4 +27,5 @@ public class AirportResponseDto {
   private String takeTime;
   // 항공편 가격
   private int charge;
+  private int chargeDc;
 }

@@ -1,4 +1,4 @@
-package com.example.intermediate.dto;
+package com.example.intermediate.Enum;
 
 import lombok.Getter;
 

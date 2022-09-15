@@ -3,23 +3,14 @@ package com.example.intermediate.jwt;
 import com.example.intermediate.domain.Member;
 import com.example.intermediate.domain.RefreshToken;
 import com.example.intermediate.domain.UserDetailsImpl;
-import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.dto.request.TokenDto;
+import com.example.intermediate.dto.response.ResponseDto;
 import com.example.intermediate.repository.RefreshTokenRepository;
 import com.example.intermediate.shared.Authority;
-import io.jsonwebtoken.ExpiredJwtException;
-import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.MalformedJwtException;
-import io.jsonwebtoken.SignatureAlgorithm;
-import io.jsonwebtoken.UnsupportedJwtException;
+import io.jsonwebtoken.*;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import io.jsonwebtoken.security.SecurityException;
-import java.security.Key;
-import java.util.Base64;
-import java.util.Date;
-import java.util.Optional;
-
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AnonymousAuthenticationToken;
@@ -27,6 +18,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.security.Key;
+import java.util.Date;
+import java.util.Optional;
 
 @Slf4j
 @Component
