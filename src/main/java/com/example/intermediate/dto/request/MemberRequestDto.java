@@ -19,7 +19,7 @@ public class MemberRequestDto {
 
   @NotBlank
   @Size(min = 4, max = 32)
-  @Pattern(regexp = "[a-z\\d]*${3,32}")
+  @Pattern(regexp = "[a-zA-Z\\d]*${3,32}")
   private String password;
 
   @NotBlank

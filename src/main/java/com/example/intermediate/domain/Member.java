@@ -1,5 +1,6 @@
 package com.example.intermediate.domain;
 
+import com.example.intermediate.Enum.GradeEnum;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import java.util.Objects;
 import javax.persistence.Column;
@@ -32,6 +33,12 @@ public class Member extends Timestamped {
   @JsonIgnore
   private String password;
 
+  @Column
+  private GradeEnum grade;
+
+  @Column
+  private int amount;
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -52,4 +59,14 @@ public class Member extends Timestamped {
   public boolean valipassengerPassword(PasswordEncoder passwordEncoder, String password) {
     return passwordEncoder.matches(password, this.password);
   }
+
+  public GradeEnum getGrade(){
+    if (amount > 300000){
+      return GradeEnum.Vip;
+    }else {
+      return GradeEnum.BASIC;
+    }
+
+  }
+
 }

@@ -5,10 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Pattern;
-import javax.validation.constraints.Size;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +24,7 @@ public class TicketRequestDto {
   // 여행 종료일
   private String endTime;
   // 소요시간
-  private String takeTime;
+  private int takeTime;
   // 항공편 가격
   private int charge;
 

@@ -19,16 +19,9 @@ public class TicketController {
     private final TicketService ticketService;
 
     //여행 상세 페이지 조회하기
-    @RequestMapping(value = "/api/ticket", method = RequestMethod.GET)
-    public ResponseDto<?> SearchTicket(@RequestParam(value = "depAirportId") String ticketStartRequestDto,
-                                       @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto,
-                                       HttpServletRequest httpServletRequest
-    ) throws IOException, ParseException, java.text.ParseException {
-
-
-        //return ResponseDto.success(ticketPlandTimeRequestDto);
-        return ticketService.SearchTicket(ticketStartRequestDto,ticketPlandTimeRequestDto,httpServletRequest);
-
+    @RequestMapping(value = "/ticket", method = RequestMethod.GET)
+    public ResponseDto<?> SearchTicket () throws IOException, ParseException {
+        return ticketService.SearchTicket();
     }
     //티켓 정보 입력
     @RequestMapping(value = "/api/auth/booking", method = RequestMethod.POST)
@@ -48,14 +41,18 @@ public class TicketController {
 
     }
 
+//  //여행 목록 조회하기
+//  @RequestMapping(value = "/ticket", method = RequestMethod.GET)
+//  public ResponseDto<?> getAllTickets(HttpServletRequest request) {
+//    return ticketService.getAllTicket(request);
+//  }
 
 
 
-
-
-  //여행 삭제하기
+//여행 삭제하기
 //  @RequestMapping(value = "/ticket/{id}", method = RequestMethod.DELETE)
 //  public ResponseDto<?> deleteTicket(@PathVariable Long id,
 //                                   HttpServletRequest request) {
 //    return ticketService.deleteTicket(id, request);
 //  }
+

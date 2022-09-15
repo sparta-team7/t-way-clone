@@ -5,9 +5,6 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
-import java.util.ArrayList;
-import java.util.List;
-
 //Ticket 상세 조회용 DTO
 @Builder
 @Getter
@@ -15,11 +12,20 @@ import java.util.List;
 @AllArgsConstructor
 public class AirportResponseDto {
   private String endPoint;
-  private String endTime;
+
+  // 출발 공항 한글
   private String startPoint;
-  private String startTime;
-  private String charge;
+  // 출발 공항 영어코드
+  private String startEng;
+  // 항공기 편명
   private String flyNum;
-  private String prestigeCharge;
-  private String vihicleId;
+  // 출발 시간
+  private String startTime;
+  // 여행 종료일
+  private String endTime;
+  // 소요시간
+  private int takeTime;
+  // 항공편 가격
+  private int charge;
+  private int chargeDc;
 }

@@ -16,16 +16,15 @@ import javax.validation.constraints.Size;
 public class PassengerResponseDto {
 
   //성별
-
   private String gender;
+
   //국적
-
   private String country;
+
   //이름
-
   private String name;
-  //생일
 
+  //생일
   private String birth;
 
   private String email;

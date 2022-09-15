@@ -22,7 +22,7 @@ public class TicketResponseDto {
   private String flyNum;
   private String startTime;
   private String endTime;
-  private String takeTime;
+  private int takeTime;
   private int charge;
   private String bookingNum;
 

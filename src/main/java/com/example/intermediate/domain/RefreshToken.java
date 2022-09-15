@@ -30,7 +30,6 @@ public class RefreshToken extends Timestamped {
   @Column(nullable = false)
   private String keyValue;
 
-  public void uppassengerValue(String token) {
-    this.keyValue = token;
-  }
+  @Column(nullable = true)
+  private String kakao;
 }

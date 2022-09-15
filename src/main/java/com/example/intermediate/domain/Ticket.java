@@ -40,7 +40,7 @@ public class Ticket {
   private String endTime;
   // 소요시간
   @Column(nullable = false)
-  private String takeTime;
+  private int takeTime;
 
   // 항공편 가격
   @Column(nullable = false)
