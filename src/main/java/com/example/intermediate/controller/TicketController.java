@@ -19,7 +19,7 @@ public class TicketController {
     private final TicketService ticketService;
 
     //여행 상세 페이지 조회하기
-    @RequestMapping(value = "/api/ticket", method = RequestMethod.GET)
+    @GetMapping( "/api/ticket")
     public ResponseDto<?> SearchTicket(@RequestParam(value = "depAirportId") String ticketStartRequestDto,
                                        @RequestParam(value = "depPlandTime") String ticketPlandTimeRequestDto,
                                        HttpServletRequest httpServletRequest
@@ -31,12 +31,12 @@ public class TicketController {
 
     }
     //티켓 정보 입력
-    @RequestMapping(value = "/api/auth/booking", method = RequestMethod.POST)
+    @PostMapping( "/api/auth/booking")
     public ResponseDto<?> creatTicket(@RequestBody TicketRequestDto requestDto,HttpServletRequest request) {
         return ticketService.createTicket(requestDto,request);
     }
     //나의 예약 조회하기
-    @RequestMapping(value = "/api/auth/mybooking", method = RequestMethod.GET)
+    @GetMapping("/api/auth/mybooking")
     public ResponseDto<?> getTicket (@RequestParam String bookingNum) {
         System.out.println(bookingNum);
         return ticketService.getTicket(bookingNum);

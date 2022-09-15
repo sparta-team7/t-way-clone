@@ -18,25 +18,25 @@ public class MemberController {
 
   private final MemberService memberService;
   //회원가입
-  @RequestMapping(value = "/api/member/signup", method = RequestMethod.POST)  //회원가입 api
+  @PostMapping( "/api/member/signup")  //회원가입 api
   public ResponseDto<?> signup(@RequestBody @Valid MemberRequestDto requestDto) {
     return memberService.createMember(requestDto);
   }
 
-  @RequestMapping(value = "/api/member/login", method = RequestMethod.POST) //로그인 api
+  @PostMapping("/api/member/login") //로그인 api
   public ResponseDto<?> login(@RequestBody @Valid LoginRequestDto requestDto,
       HttpServletResponse response
   ) {
     return memberService.login(requestDto, response);
   }
 
-  @RequestMapping(value = "/api/member/logout", method = RequestMethod.POST)  //로그아웃 api
+  @PostMapping( "/api/member/logout")  //로그아웃 api
   public ResponseDto<?> logout(HttpServletRequest request) {
     return memberService.logout(request);
   }
 
 
-  @RequestMapping(value = "/api/member/kakao/callback", method = RequestMethod.GET)  //로그아웃 api
+  @GetMapping( "/api/member/kakao/callback")  //로그아웃 api
   public ResponseDto<?> kakaoCallback(@RequestParam String code, HttpServletResponse response) throws IOException {
     System.out.println(code);
     return memberService.getKakaoAccessToken(code, response);
