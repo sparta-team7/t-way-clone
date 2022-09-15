@@ -125,7 +125,7 @@ public class TicketService {
                     .charge(Integer.parseInt(airport.get("economyCharge").toString()))
                     .chargeDc(cargeDc)
                     .flyNum(airport.get("vihicleId").toString())
-                    .takeTime(Integer.parseInt(calHour + "시간" + calMinutes + "분"))
+                    .takeTime(calHour + "시간" + calMinutes + "분")
                     .build());
 
         }
