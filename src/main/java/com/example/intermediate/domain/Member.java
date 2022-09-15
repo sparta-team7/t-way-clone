@@ -62,9 +62,9 @@ public class Member extends Timestamped {
 
   public GradeEnum getGrade(){
     if (amount > 300000){
-      return GradeEnum.Vip;
+      return grade.valueOf(String.valueOf(GradeEnum.Vip));
     }else {
-      return GradeEnum.BASIC;
+      return grade.valueOf(String.valueOf(GradeEnum.BASIC));
     }
 
   }
