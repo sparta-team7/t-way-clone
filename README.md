@@ -4,6 +4,7 @@ Frontend GitHub : https://github.com/lee123so/Clone-T-way-Front_end<br>
 Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
 
 <h2>✌️ 프로젝트 소개</h2><br>
+
 <h2>📅 제작 기간<br></h2>
 2022.09. 09 ~ 2022. 09. 15<br>
 👪 구성원 & 담당<br>
@@ -21,7 +22,8 @@ Backend GitHub : https://github.com/sparta-team7/t-way-clone<br><br>
   
     
 📗 와이어프레임<br>
-https://user-images.githubusercontent.com/110470208/190321574-f8a52e2a-4f46-4d0e-a8e7-64a3b67cccf7.png
+![190314437-c1807b23-be87-4ce2-8296-24462a87803b](https://user-images.githubusercontent.com/110470208/190331379-252bae28-c832-438f-9c81-a636f29d122c.png)
+
 
 📘 ERD<br>
 <img width="835" alt="Untitled (1)" src="https://user-images.githubusercontent.com/110470208/190321522-2f341bf6-52d9-4b93-b6a1-fb93e3f362be.png">
@@ -29,12 +31,23 @@ https://user-images.githubusercontent.com/110470208/190321574-f8a52e2a-4f46-4d0e
 
 📙 API<br>
 ![7조 api](https://user-images.githubusercontent.com/110470208/190321495-94bdaf44-4f72-4335-a58f-ba20df9bb632.JPG)
-
 <h2>✨ 주요 기능</h2><br>
-
-<br>
+- 회원가입<br>
+    - 기존 Tway와는 달리 회원가입 과정에서 userid,, password 정보를 직접 받아 회원등록을 처리합니다.<br>
+- 메인페이지<br>
+    - 예약은 안되지만 예쁘다.<br>
+- 예약<br>
+    - 현장결제만 지원하며 수화물이 고정되어있다. (선택항목을 줄여 더욱 간편하고 빠르다)<br>
+    - 편도(도착지 제주도로 한정) 항공편만 예약이 가능하다<br>
+- 예약 조회<br>
+    - 구매 일자는 입력하지 않고 예약 번호로만 조회한다.<br>
 
 👷 사용한 기술<br>
 Back-end : SPring;
 Front-end : React;
 😡 Trouble Shooting<br>
+Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type
+'com.example.intermediate.discount.RateDiscountPolicy' that could not be found.
+라는 오류가 RateDiscountPolicy에 @Component가 들어가지 않아서 생기는 오류였다. 
+
+
