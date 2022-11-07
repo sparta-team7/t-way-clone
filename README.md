@@ -31,7 +31,8 @@ T-way 항공 클론코딩<br>
 
 
 📙 API<br>
-![7조 api](https://user-images.githubusercontent.com/110470208/190321495-94bdaf44-4f72-4335-a58f-ba20df9bb632.JPG)
+<img width="691" alt="티웨이 API" src="https://user-images.githubusercontent.com/110277186/200319812-44881ec6-a597-4aa6-8681-af67565e5189.png">
+
 <h2>✨ 주요 기능</h2><br>
 - 회원가입<br>
     - 기존 Tway와는 달리 회원가입 과정에서 userid,, password 정보를 직접 받아 회원등록을 처리합니다.<br>
