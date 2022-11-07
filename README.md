@@ -48,6 +48,7 @@ T-way 항공 클론코딩<br>
 Back-end : Spring;<br>
 Front-end : React;<br><br>
 <h2>😡 Trouble Shooting</h2><br>
+<h4>의존 관계 주입 오류</h4><br>
 Parameter 0 of constructor in com.example.intermediate.service.TicketService required a bean of type<br>
 'com.example.intermediate.discount.RateDiscountPolicy' that could not be found.<br>
 라는 오류가 생겼는데 RateDiscountPolicy에 @Component가 들어가지 않아서 생기는 오류였다. <br>
@@ -56,6 +57,6 @@ Parameter 0 of constructor in com.example.intermediate.service.TicketService req
 컴포넌트 스캔은 @Component가 달려있는 Bean만 의존관계를 주입시켜줄 수 있다.<br>
 
 
-
+<br>
 Notion:
-https://www.notion.so/7-Tway-7f5f845972d24632882c9e52a356fc4a
+https://www.notion.so/7-Tway-7f5f845972d24632882c9e52a356fc4a<br>
